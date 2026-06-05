@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FitLife Hub — Health & Fitness Tips</title>
+
+  <!--
+  ╔══════════════════════════════════════════════════╗
+  ║         GOOGLE ADSENSE CONFIGURATION             ║
+  ║                                                  ║
+  ║  STEP 1: Replace YOUR_PUBLISHER_ID with your     ║
+  ║          real AdSense Publisher ID               ║
+  ║          Example: ca-pub-1234567890123456        ║
+  ║                                                  ║
+  ║  STEP 2: Replace each AD_SLOT_ID_X with your     ║
+  ║          real Ad Unit IDs from AdSense dashboard ║
+  ║                                                  ║
+  ║  STEP 3: Host on an AdSense-approved domain.     ║
+  ║          Ads won't display on localhost.         ║
+  ╚══════════════════════════════════════════════════╝
+  -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID" crossorigin="anonymous"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green: #2d6a4f; --green-light: #52b788; --green-pale: #d8f3dc;
+      --amber: #e9c46a; --coral: #e76f51;
+      --text: #1b2a22; --text-muted: #4a6356;
+      --bg: #f7faf8; --white: #fff; --border: #cce5d4; --radius: 14px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.7; }
+
+    /* NAV */
+    nav { background: var(--white); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 200; padding: 0 2rem; }
+    .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; color: var(--green); text-decoration: none; letter-spacing: -0.5px; cursor: pointer; }
+    .logo span { color: var(--green-light); }
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 500; transition: color .2s; cursor: pointer; }
+    nav a:hover { color: var(--green); }
+
+    /* PAGES */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* HERO */
+    .hero { background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 60%, #52b788 100%); color: white; padding: 80px 2rem 90px; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/svg%3E"); }
+    .hero-inner { position: relative; max-width: 700px; margin: 0 auto; }
+    .hero-badge { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 100px; padding: 6px 18px; font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1.5rem; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 900; line-height: 1.15; margin-bottom: 1.2rem; }
+    .hero p { font-size: 1.1rem; opacity: 0.85; max-width: 520px; margin: 0 auto 2rem; }
+    .hero-btn { display: inline-block; background: var(--amber); color: #1b2a22; font-weight: 600; padding: 14px 36px; border-radius: 100px; text-decoration: none; font-size: 0.95rem; cursor: pointer; transition: transform .2s; border: none; font-family: 'DM Sans', sans-serif; }
+    .hero-btn:hover { transform: translateY(-2px); }
+
+    /* LAYOUT */
+    .page-wrap { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .content-grid { display: grid; grid-template-columns: 1fr 300px; gap: 2.5rem; }
+
+    /* AD SLOTS */
+    .ad-banner { background: var(--white); border: 1px dashed var(--border); border-radius: var(--radius); padding: 1rem; text-align: center; margin: 2rem 0; min-height: 100px; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+    .ad-sidebar { background: var(--white); border: 1px dashed var(--border); border-radius: var(--radius); padding: 1rem; text-align: center; min-height: 260px; display: flex; align-items: center; justify-content: center; flex-direction: column; margin-bottom: 1.5rem; }
+    .ad-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 6px; }
+
+    /* SECTION */
+    .section { padding: 3rem 0; }
+    .section-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; color: var(--green-light); margin-bottom: 0.5rem; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; margin-bottom: 2rem; }
+
+    /* ARTICLE CARDS */
+    .articles { display: flex; flex-direction: column; gap: 1.5rem; }
+    .card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; display: grid; grid-template-columns: 160px 1fr; transition: transform .2s, box-shadow .2s; cursor: pointer; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(45,106,79,0.1); }
+    .card-img { background: var(--green-pale); display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+    .card-body { padding: 1.25rem 1.5rem; }
+    .card-tag { display: inline-block; background: var(--green-pale); color: var(--green); font-size: 0.7rem; font-weight: 600; padding: 3px 10px; border-radius: 100px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.6rem; }
+    .card h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.35; }
+    .card p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+    .card-meta { margin-top: 0.75rem; font-size: 0.78rem; color: var(--text-muted); display: flex; gap: 1rem; }
+    .read-more { display: inline-block; margin-top: 0.75rem; font-size: 0.82rem; font-weight: 600; color: var(--green); }
+
+    /* TIPS GRID */
+    .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; }
+    .tip-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
+    .tip-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .tip-card h4 { font-size: 1rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .tip-card p { font-size: 0.85rem; color: var(--text-muted); }
+
+    /* BMI CALC */
+    .calculator { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; max-width: 520px; }
+    .calc-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    label { font-size: 0.85rem; font-weight: 500; color: var(--text-muted); }
+    input[type="number"] { border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 1rem; font-family: 'DM Sans', sans-serif; color: var(--text); background: var(--bg); outline: none; transition: border-color .2s; }
+    input[type="number"]:focus { border-color: var(--green-light); }
+    .calc-btn { background: var(--green); color: white; border: none; border-radius: 8px; padding: 12px 28px; font-size: 0.95rem; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: background .2s; }
+    .calc-btn:hover { background: #1b4332; }
+    .bmi-result { margin-top: 1.2rem; padding: 1rem 1.25rem; border-radius: 10px; background: var(--green-pale); display: none; }
+    .bmi-result.show { display: block; }
+    .bmi-number { font-size: 2rem; font-weight: 700; color: var(--green); }
+    .bmi-cat { font-size: 0.9rem; color: var(--text-muted); margin-top: 2px; }
+    .bmi-advice { margin-top: 0.75rem; font-size: 0.85rem; color: var(--text); line-height: 1.6; }
+
+    /* SIDEBAR */
+    .sidebar-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1.5rem; }
+    .sidebar-card h4 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+    .sidebar-list { list-style: none; }
+    .sidebar-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--green-pale); font-size: 0.88rem; }
+    .sidebar-list li:last-child { border-bottom: none; }
+    .sidebar-list a { text-decoration: none; color: var(--text); transition: color .2s; cursor: pointer; }
+    .sidebar-list a:hover { color: var(--green); }
+    .pill { display: inline-block; background: var(--green-pale); color: var(--green); font-size: 0.72rem; font-weight: 600; padding: 2px 8px; border-radius: 100px; margin-right: 4px; }
+
+    /* NEWSLETTER */
+    .newsletter { background: var(--green); color: white; border-radius: var(--radius); padding: 2.5rem 2rem; text-align: center; margin: 2rem 0; }
+    .newsletter h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 0.5rem; }
+    .newsletter p { opacity: 0.8; margin-bottom: 1.5rem; font-size: 0.9rem; }
+    .nl-form { display: flex; gap: 0.75rem; max-width: 400px; margin: 0 auto; }
+    .nl-form input { flex: 1; padding: 11px 16px; border-radius: 8px; border: none; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; }
+    .nl-btn { background: var(--amber); color: #1b2a22; border: none; border-radius: 8px; padding: 11px 22px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; white-space: nowrap; }
+
+    /* ── ARTICLE PAGE ── */
+    .article-page { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .article-grid { display: grid; grid-template-columns: 1fr 300px; gap: 2.5rem; padding: 2.5rem 0; }
+    .back-btn { display: inline-flex; align-items: center; gap: 6px; background: none; border: 1px solid var(--border); border-radius: 100px; padding: 8px 18px; font-size: 0.85rem; font-weight: 500; color: var(--text-muted); cursor: pointer; margin: 1.5rem 0; transition: border-color .2s, color .2s; font-family: 'DM Sans', sans-serif; }
+    .back-btn:hover { border-color: var(--green); color: var(--green); }
+    .article-header { margin-bottom: 2rem; }
+    .article-tag { display: inline-block; background: var(--green-pale); color: var(--green); font-size: 0.75rem; font-weight: 600; padding: 4px 12px; border-radius: 100px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1rem; }
+    .article-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 900; line-height: 1.2; margin-bottom: 1rem; }
+    .article-meta { font-size: 0.82rem; color: var(--text-muted); display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+    .article-hero-img { background: linear-gradient(135deg, var(--green-pale), #b7e4c7); border-radius: var(--radius); height: 280px; display: flex; align-items: center; justify-content: center; font-size: 5rem; margin-bottom: 2rem; }
+    .article-body { font-size: 1.02rem; line-height: 1.85; color: var(--text); }
+    .article-body h2 { font-family: 'Playfair Display', serif; font-size: 1.55rem; font-weight: 700; margin: 2rem 0 0.75rem; color: var(--green); }
+    .article-body h3 { font-size: 1.1rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+    .article-body p { margin-bottom: 1.2rem; }
+    .article-body ul, .article-body ol { margin: 0.5rem 0 1.2rem 1.5rem; }
+    .article-body li { margin-bottom: 0.5rem; }
+    .article-body strong { font-weight: 600; color: var(--green); }
+    .callout { background: var(--green-pale); border-left: 4px solid var(--green); border-radius: 0 10px 10px 0; padding: 1rem 1.25rem; margin: 1.5rem 0; font-size: 0.95rem; }
+    .callout strong { display: block; margin-bottom: 0.3rem; color: var(--green); }
+    .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .stat-box { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; text-align: center; }
+    .stat-num { font-size: 1.8rem; font-weight: 700; color: var(--green); font-family: 'Playfair Display', serif; }
+    .stat-lbl { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+    .exercise-block { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; margin: 1rem 0; }
+    .exercise-block h4 { font-weight: 600; font-size: 1rem; margin-bottom: 0.4rem; color: var(--green); }
+    .exercise-block p { font-size: 0.88rem; color: var(--text-muted); margin: 0; }
+    .exercise-tag { display: inline-block; background: #fff3cd; color: #856404; font-size: 0.7rem; font-weight: 600; padding: 2px 8px; border-radius: 6px; margin-bottom: 0.5rem; }
+
+    /* FOOTER */
+    footer { background: #1b2a22; color: #aac5b4; text-align: center; padding: 2rem; font-size: 0.85rem; margin-top: 3rem; }
+    footer a { color: var(--green-light); text-decoration: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .content-grid, .article-grid { grid-template-columns: 1fr; }
+      .card { grid-template-columns: 1fr; }
+      .card-img { height: 110px; }
+      .calc-row { grid-template-columns: 1fr; }
+      nav ul { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <span class="logo" onclick="showHome()">Fit<span>Life</span> Hub</span>
+    <ul>
+      <li><a onclick="showHome(); scrollTo('articles')">Articles</a></li>
+      <li><a onclick="showHome(); scrollTo('tips')">Tips</a></li>
+      <li><a onclick="showHome(); scrollTo('calculator')">BMI Tool</a></li>
+      <li><a onclick="showHome(); scrollTo('newsletter')">Newsletter</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ════════════════════ HOME PAGE ════════════════════ -->
+<div id="home-page" class="page active">
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">🌿 Your Wellness Journey Starts Here</div>
+      <h1>Live Stronger,<br>Feel Better Every Day</h1>
+      <p>Evidence-based health tips, workout guides, and nutrition advice — all in one place.</p>
+      <button class="hero-btn" onclick="scrollTo('articles')">Explore Articles ↓</button>
+    </div>
+  </section>
+
+  <div class="page-wrap">
+
+    <!-- TOP BANNER AD -->
+    <div class="ad-banner">
+      <div class="ad-label">Advertisement</div>
+      <!-- ★ Replace AD_SLOT_ID_1 with your AdSense Ad Unit ID ★ -->
+      <ins class="adsbygoogle" style="display:block;width:100%;min-height:90px;"
+           data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+           data-ad-slot="AD_SLOT_ID_1"
+           data-ad-format="horizontal"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <div class="content-grid">
+      <main>
+
+        <!-- ARTICLES -->
+        <section class="section" id="articles">
+          <div class="section-label">Latest</div>
+          <div class="section-title">Health & Fitness Articles</div>
+          <div class="articles">
+
+            <div class="card" onclick="openArticle('compound')">
+              <div class="card-img">🏋️</div>
+              <div class="card-body">
+                <span class="card-tag">Strength</span>
+                <h3>The 5 Best Compound Exercises for Full-Body Strength</h3>
+                <p>Stop spending hours at the gym. These five moves build muscle and burn fat more efficiently than any isolated exercise.</p>
+                <div class="card-meta"><span>📅 June 3, 2026</span><span>⏱ 8 min read</span></div>
+                <span class="read-more">Read full article →</span>
+              </div>
+            </div>
+
+            <div class="card" onclick="openArticle('macros')">
+              <div class="card-img">🥦</div>
+              <div class="card-body">
+                <span class="card-tag">Nutrition</span>
+                <h3>How to Eat for Energy: A Beginner's Guide to Macros</h3>
+                <p>Understanding protein, carbs, and fats doesn't have to be complicated. Here's a simple framework that actually works.</p>
+                <div class="card-meta"><span>📅 May 29, 2026</span><span>⏱ 9 min read</span></div>
+                <span class="read-more">Read full article →</span>
+              </div>
+            </div>
+
+            <!-- MID AD -->
+            <div class="ad-banner">
+              <div class="ad-label">Advertisement</div>
+              <!-- ★ Replace AD_SLOT_ID_2 with your AdSense Ad Unit ID ★ -->
+              <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px;"
+                   data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+                   data-ad-slot="AD_SLOT_ID_2"
+                   data-ad-format="rectangle"
+                   data-full-width-responsive="true"></ins>
+              <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            </div>
+
+            <div class="card" onclick="openArticle('sleep')">
+              <div class="card-img">😴</div>
+              <div class="card-body">
+                <span class="card-tag">Recovery</span>
+                <h3>Why Sleep Is the Most Underrated Performance Tool</h3>
+                <p>No supplement or workout protocol beats quality sleep. Learn how to optimise your rest for better gains and health.</p>
+                <div class="card-meta"><span>📅 May 22, 2026</span><span>⏱ 7 min read</span></div>
+                <span class="read-more">Read full article →</span>
+              </div>
+            </div>
+
+            <div class="card" onclick="openArticle('stretching')">
+              <div class="card-img">🧘</div>
+              <div class="card-body">
+                <span class="card-tag">Mindfulness</span>
+                <h3>10-Minute Morning Stretching Routine That Changes Your Day</h3>
+                <p>This gentle sequence relieves stiffness, boosts circulation, and sets a positive tone — no equipment needed.</p>
+                <div class="card-meta"><span>📅 May 15, 2026</span><span>⏱ 6 min read</span></div>
+                <span class="read-more">Read full article →</span>
+              </div>
+            </div>
+
+            <div class="card" onclick="openArticle('walkvsrun')">
+              <div class="card-img">🏃</div>
+              <div class="card-body">
+                <span class="card-tag">Cardio</span>
+                <h3>Walk vs Run: Which Is Better for Weight Loss?</h3>
+                <p>The answer might surprise you. We break down the science on calorie burn, joint impact, and sustainable habits.</p>
+                <div class="card-meta"><span>📅 May 8, 2026</span><span>⏱ 6 min read</span></div>
+                <span class="read-more">Read full article →</span>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- QUICK TIPS -->
+        <section class="section" id="tips">
+          <div class="section-label">Quick Wins</div>
+          <div class="section-title">Daily Wellness Tips</div>
+          <div class="tips-grid">
+            <div class="tip-card"><div class="tip-icon">💧</div><h4>Hydrate First</h4><p>Drink 500ml of water within 30 minutes of waking to kick-start metabolism and mental clarity.</p></div>
+            <div class="tip-card"><div class="tip-icon">🥗</div><h4>Protein Every Meal</h4><p>Aim for 20–30g of protein per meal to preserve muscle, reduce hunger, and stabilise blood sugar.</p></div>
+            <div class="tip-card"><div class="tip-icon">🚶</div><h4>10,000 Steps</h4><p>Daily walking reduces cardiovascular risk by up to 30%. Break it up across the day if needed.</p></div>
+            <div class="tip-card"><div class="tip-icon">📵</div><h4>Screen Curfew</h4><p>Avoid screens 1 hour before bed. Blue light suppresses melatonin and disrupts deep sleep.</p></div>
+            <div class="tip-card"><div class="tip-icon">🧂</div><h4>Watch Sodium</h4><p>Keep sodium under 2,300mg/day. Excess salt causes bloating and raises blood pressure over time.</p></div>
+            <div class="tip-card"><div class="tip-icon">🫁</div><h4>Box Breathing</h4><p>4 counts in → hold 4 → out 4 → hold 4. Repeat 4 times to instantly lower stress levels.</p></div>
+          </div>
+        </section>
+
+        <!-- BMI CALCULATOR -->
+        <section class="section" id="calculator">
+          <div class="section-label">Free Tool</div>
+          <div class="section-title">BMI Calculator</div>
+          <div class="calculator">
+            <div class="calc-row">
+              <div class="form-group"><label for="weight">Weight (kg)</label><input type="number" id="weight" placeholder="70" min="20" max="300" /></div>
+              <div class="form-group"><label for="height">Height (cm)</label><input type="number" id="height" placeholder="175" min="100" max="250" /></div>
+            </div>
+            <div class="form-group" style="margin-bottom:1rem;">
+              <label for="age">Age (years)</label>
+              <input type="number" id="age" placeholder="30" min="10" max="110" style="max-width:160px;" />
+            </div>
+            <button class="calc-btn" onclick="calcBMI()">Calculate BMI</button>
+            <div class="bmi-result" id="bmi-result">
+              <div class="bmi-number" id="bmi-value">—</div>
+              <div class="bmi-cat" id="bmi-cat">—</div>
+              <div class="bmi-advice" id="bmi-advice"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- BOTTOM AD -->
+        <div class="ad-banner">
+          <div class="ad-label">Advertisement</div>
+          <!-- ★ Replace AD_SLOT_ID_3 with your AdSense Ad Unit ID ★ -->
+          <ins class="adsbygoogle" style="display:block;width:100%;min-height:90px;"
+               data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+               data-ad-slot="AD_SLOT_ID_3"
+               data-ad-format="horizontal"
+               data-full-width-responsive="true"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+
+      </main>
+
+      <aside class="sidebar">
+        <div class="ad-sidebar">
+          <div class="ad-label">Advertisement</div>
+          <!-- ★ Replace AD_SLOT_ID_4 with your AdSense Ad Unit ID ★ -->
+          <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px;"
+               data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+               data-ad-slot="AD_SLOT_ID_4"
+               data-ad-format="rectangle"
+               data-full-width-responsive="true"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+        <div class="sidebar-card">
+          <h4>Popular This Week</h4>
+          <ul class="sidebar-list">
+            <li><span class="pill">🔥</span><a onclick="openArticle('compound')">5 Best Compound Exercises</a></li>
+            <li><span class="pill">🥗</span><a onclick="openArticle('macros')">Beginner's Guide to Macros</a></li>
+            <li><span class="pill">💤</span><a onclick="openArticle('sleep')">Sleep & Performance</a></li>
+            <li><span class="pill">🧘</span><a onclick="openArticle('stretching')">Morning Stretch Routine</a></li>
+            <li><span class="pill">🏃</span><a onclick="openArticle('walkvsrun')">Walk vs Run for Weight Loss</a></li>
+          </ul>
+        </div>
+        <div class="sidebar-card">
+          <h4>Browse Topics</h4>
+          <ul class="sidebar-list">
+            <li><a onclick="openArticle('compound')">🏋️ Strength Training</a></li>
+            <li><a onclick="openArticle('macros')">🥦 Nutrition & Diet</a></li>
+            <li><a onclick="openArticle('stretching')">🧘 Yoga & Flexibility</a></li>
+            <li><a onclick="openArticle('walkvsrun')">🏃 Running & Cardio</a></li>
+            <li><a onclick="openArticle('sleep')">😴 Sleep & Recovery</a></li>
+          </ul>
+        </div>
+        <div class="ad-sidebar">
+          <div class="ad-label">Advertisement</div>
+          <!-- ★ Replace AD_SLOT_ID_5 with your AdSense Ad Unit ID ★ -->
+          <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px;"
+               data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+               data-ad-slot="AD_SLOT_ID_5"
+               data-ad-format="rectangle"
+               data-full-width-responsive="true"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+      </aside>
+    </div>
+
+    <!-- NEWSLETTER -->
+    <section id="newsletter">
+      <div class="newsletter">
+        <h3>Get Weekly Wellness Tips</h3>
+        <p>Join 12,000+ readers getting science-backed health advice every Monday morning.</p>
+        <div class="nl-form">
+          <input type="email" placeholder="your@email.com" />
+          <button class="nl-btn" onclick="alert('Thanks for subscribing!')">Subscribe</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- ════════════════════ ARTICLE PAGES ════════════════════ -->
+<div id="article-page" class="page">
+  <div class="article-page">
+    <button class="back-btn" onclick="showHome()">← Back to Articles</button>
+    <div class="article-grid">
+      <article>
+        <div id="article-content"></div>
+        <!-- IN-ARTICLE AD -->
+        <div class="ad-banner" style="margin:2rem 0;">
+          <div class="ad-label">Advertisement</div>
+          <!-- ★ Replace AD_SLOT_ID_6 with your AdSense Ad Unit ID ★ -->
+          <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px;"
+               data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+               data-ad-slot="AD_SLOT_ID_6"
+               data-ad-format="rectangle"
+               data-full-width-responsive="true"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+        <div id="article-content-2"></div>
+      </article>
+      <aside class="sidebar">
+        <div class="ad-sidebar">
+          <div class="ad-label">Advertisement</div>
+          <!-- ★ Replace AD_SLOT_ID_7 with your AdSense Ad Unit ID ★ -->
+          <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px;"
+               data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+               data-ad-slot="AD_SLOT_ID_7"
+               data-ad-format="rectangle"
+               data-full-width-responsive="true"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+        <div class="sidebar-card">
+          <h4>More Articles</h4>
+          <ul class="sidebar-list">
+            <li><a onclick="openArticle('compound')">🏋️ 5 Best Compound Exercises</a></li>
+            <li><a onclick="openArticle('macros')">🥦 Beginner's Guide to Macros</a></li>
+            <li><a onclick="openArticle('sleep')">😴 Sleep & Performance</a></li>
+            <li><a onclick="openArticle('stretching')">🧘 Morning Stretch Routine</a></li>
+            <li><a onclick="openArticle('walkvsrun')">🏃 Walk vs Run</a></li>
+          </ul>
+        </div>
+        <div class="ad-sidebar">
+          <div class="ad-label">Advertisement</div>
+          <!-- ★ Replace AD_SLOT_ID_8 with your AdSense Ad Unit ID ★ -->
+          <ins class="adsbygoogle" style="display:block;width:100%;min-height:250px;"
+               data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+               data-ad-slot="AD_SLOT_ID_8"
+               data-ad-format="rectangle"
+               data-full-width-responsive="true"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 FitLife Hub · <a href="#">Privacy Policy</a> · <a href="#">Disclaimer</a> · <a href="#">Contact</a></p>
+  <p style="margin-top:6px;font-size:0.75rem;opacity:0.6;">Content is for informational purposes only. Consult a healthcare professional before making changes to your diet or exercise routine.</p>
+</footer>
+
+<script>
+// ── ARTICLE DATA ──────────────────────────────────────────
+const articles = {
+
+  compound: {
+    tag: 'Strength Training', emoji: '🏋️',
+    title: 'The 5 Best Compound Exercises for Full-Body Strength',
+    meta: ['📅 June 3, 2026', '⏱ 8 min read', '✍️ FitLife Team'],
+    part1: `
+      <div class="article-header">
+        <span class="article-tag">Strength Training</span>
+        <h1 class="article-title">The 5 Best Compound Exercises for Full-Body Strength</h1>
+        <div class="article-meta"><span>📅 June 3, 2026</span><span>⏱ 8 min read</span><span>✍️ FitLife Team</span></div>
+        <div class="article-hero-img">🏋️</div>
+      </div>
+      <div class="article-body">
+        <p>If you've ever spent 90 minutes in the gym doing bicep curls and leg extensions, only to feel like you've barely scratched the surface, you're not alone. The secret to transforming your physique and strength in less time comes down to one word: <strong>compound movements</strong>.</p>
+        <p>Unlike isolation exercises that target a single muscle, compound exercises recruit multiple muscle groups simultaneously — giving you more results per rep, better hormonal responses, and real-world functional strength.</p>
+
+        <div class="callout"><strong>🔑 Key Principle</strong>Compound lifts increase testosterone and growth hormone more than any isolation exercise, accelerating both muscle growth and fat loss.</div>
+
+        <div class="stat-row">
+          <div class="stat-box"><div class="stat-num">3x</div><div class="stat-lbl">More muscles activated vs isolation</div></div>
+          <div class="stat-box"><div class="stat-num">40%</div><div class="stat-lbl">More calories burned per session</div></div>
+          <div class="stat-box"><div class="stat-num">2–3</div><div class="stat-lbl">Workouts per week is enough</div></div>
+        </div>
+
+        <h2>1. The Squat — King of All Exercises</h2>
+        <p>The barbell back squat is often called the king of exercises, and for good reason. It works your quadriceps, hamstrings, glutes, core, and even your upper back — all at once. No other single movement loads the body so completely.</p>
+        <div class="exercise-block">
+          <span class="exercise-tag">PRIMARY MUSCLES</span>
+          <h4>Barbell Back Squat</h4>
+          <p>Quads, hamstrings, glutes, hip flexors, core, spinal erectors. Stand with feet shoulder-width apart, bar across upper traps, descend until thighs are parallel, drive through heels to stand. Keep your chest tall and knees tracking over your toes the entire time.</p>
+        </div>
+        <p><strong>Beginner tip:</strong> Start with goblet squats using a dumbbell to master the movement pattern before moving to a barbell. Focus on depth and posture before adding weight.</p>
+
+        <h2>2. The Deadlift — Total Posterior Chain Power</h2>
+        <p>The deadlift works everything from your fingertips to your toes. It's the definitive test of raw strength and one of the most functional movements in existence — every time you pick something off the floor, you're doing a deadlift.</p>
+        <div class="exercise-block">
+          <span class="exercise-tag">PRIMARY MUSCLES</span>
+          <h4>Conventional Deadlift</h4>
+          <p>Hamstrings, glutes, spinal erectors, lats, traps, forearms, core. Stand over the bar with feet hip-width apart. Hinge at the hips, grip the bar just outside your legs, keep your back flat, and drive your hips forward as you stand. Lower with control.</p>
+        </div>
+        <p><strong>Common mistake:</strong> Rounding the lower back. Always brace your core as if you're about to take a punch, and keep the bar close to your body throughout the lift.</p>
+
+        <h2>3. The Bench Press — Upper Body Pushing Strength</h2>
+        <p>The bench press builds a powerful chest, shoulders, and triceps. It's the most universally used upper-body strength test and a foundation of any solid training programme.</p>
+        <div class="exercise-block">
+          <span class="exercise-tag">PRIMARY MUSCLES</span>
+          <h4>Flat Barbell Bench Press</h4>
+          <p>Pectorals (chest), anterior deltoids (front shoulders), triceps. Lie on the bench with eyes below the bar, grip slightly wider than shoulder-width, lower the bar with control to your lower chest, press up in a slight arc. Keep feet flat on the floor and shoulder blades pinched.</p>
+        </div>
+    `,
+    part2: `
+        <h2>4. The Overhead Press — Shoulder & Core Stability</h2>
+        <p>The standing overhead press (or military press) is the most honest test of upper-body strength. Unlike the bench press, there's no bench to stabilise you — your entire body must work as one unit.</p>
+        <div class="exercise-block">
+          <span class="exercise-tag">PRIMARY MUSCLES</span>
+          <h4>Standing Barbell Overhead Press</h4>
+          <p>Deltoids, upper pectorals, triceps, traps, entire core. Stand with feet hip-width apart, bar resting on your clavicle and front deltoids, press the bar overhead until arms are locked out, lower back to the start. Avoid excessive lower-back arch — brace your abs throughout.</p>
+        </div>
+        <p><strong>Why standing matters:</strong> Seated pressing removes core activation. The standing version forces your body to stabilise under load, developing true functional strength that translates to sport and daily life.</p>
+
+        <h2>5. The Bent-Over Row — Back Thickness & Posture</h2>
+        <p>If the bench press is the most popular push movement, the bent-over row is its essential counterpart. Neglecting rows leads to muscular imbalances, poor posture, and shoulder injuries. A strong back is the foundation of all other lifts.</p>
+        <div class="exercise-block">
+          <span class="exercise-tag">PRIMARY MUSCLES</span>
+          <h4>Barbell Bent-Over Row</h4>
+          <p>Lats, rhomboids, middle traps, rear deltoids, biceps, spinal erectors. Hinge forward 45–60°, grip the bar slightly wider than shoulder-width, row the bar to your lower abdomen, squeeze your shoulder blades together at the top. Lower with control and repeat.</p>
+        </div>
+
+        <h2>How to Build Your Programme Around These 5 Lifts</h2>
+        <p>You don't need to do all five every session. A simple and highly effective approach is a 3-day per week full-body routine:</p>
+        <ul>
+          <li><strong>Day A:</strong> Squat, Bench Press, Bent-Over Row</li>
+          <li><strong>Day B:</strong> Deadlift, Overhead Press, Squat (lighter)</li>
+          <li><strong>Day C:</strong> Squat, Bench Press, Deadlift (lighter)</li>
+        </ul>
+        <p>Alternate Days A and B, resting at least one day between sessions. Add small amounts of weight each week — even 2.5kg per session adds up to 130kg of total progression over a year.</p>
+
+        <div class="callout"><strong>💡 Progressive Overload is the Secret</strong>Your muscles don't grow from doing the same thing week after week. You must consistently challenge them with slightly more weight, more reps, or less rest over time. Track every workout in a notebook or app.</div>
+
+        <h2>Final Thoughts</h2>
+        <p>These five exercises have stood the test of time because they work. They build real, functional muscle, elevate your metabolism, and can be performed with minimal equipment. Whether you're a complete beginner or an experienced lifter, building your training around these movements will deliver results faster than any complicated programme ever could.</p>
+        <p>Start light, master the technique, and be consistent. Strength is a skill — and these five lifts will teach it to you.</p>
+      </div>
+    `
+  },
+
+  macros: {
+    tag: 'Nutrition', emoji: '🥦',
+    title: 'How to Eat for Energy: A Beginner\'s Guide to Macros',
+    part1: `
+      <div class="article-header">
+        <span class="article-tag">Nutrition</span>
+        <h1 class="article-title">How to Eat for Energy: A Beginner's Guide to Macros</h1>
+        <div class="article-meta"><span>📅 May 29, 2026</span><span>⏱ 9 min read</span><span>✍️ FitLife Team</span></div>
+        <div class="article-hero-img">🥦</div>
+      </div>
+      <div class="article-body">
+        <p>You've heard it before: "abs are made in the kitchen." But nutrition advice is so contradictory and overwhelming that most people give up before they start. Low-carb? High-fat? Keto? Intermittent fasting? The truth is far simpler than the fitness industry wants you to believe.</p>
+        <p>Everything comes down to understanding three things: <strong>protein, carbohydrates, and fats</strong> — your macronutrients, or "macros" for short.</p>
+
+        <div class="callout"><strong>📌 What Are Macros?</strong>Macronutrients are the three categories of nutrients that provide calories and energy: protein (4 kcal/g), carbohydrates (4 kcal/g), and fats (9 kcal/g). Every food you eat is made up of some combination of these three.</div>
+
+        <h2>Protein: The Building Block</h2>
+        <p>Protein is the most important macro for body composition. It builds and repairs muscle tissue, keeps you feeling full, and has the highest "thermic effect" — meaning your body burns more calories just digesting it compared to carbs or fat.</p>
+        <ul>
+          <li>Aim for <strong>1.6–2.2g of protein per kg of body weight</strong> daily</li>
+          <li>Best sources: chicken breast, eggs, Greek yoghurt, cottage cheese, lentils, tofu, fish, lean beef</li>
+          <li>Spread it across 3–4 meals rather than eating it all at once</li>
+        </ul>
+
+        <div class="stat-row">
+          <div class="stat-box"><div class="stat-num">4</div><div class="stat-lbl">kcal per gram of protein</div></div>
+          <div class="stat-box"><div class="stat-num">30%</div><div class="stat-lbl">of protein calories burned during digestion</div></div>
+          <div class="stat-box"><div class="stat-num">30g</div><div class="stat-lbl">target per meal for muscle synthesis</div></div>
+        </div>
+
+        <h2>Carbohydrates: Your Brain & Muscle Fuel</h2>
+        <p>Carbohydrates have been demonised, but they are your body and brain's preferred energy source. The key isn't to eliminate them — it's to choose the <strong>right kinds and right timing</strong>.</p>
+        <p><strong>Complex carbohydrates</strong> (oats, sweet potato, brown rice, vegetables, fruit) release energy slowly and keep blood sugar stable. <strong>Simple carbohydrates</strong> (white bread, sweets, sugary drinks) cause rapid spikes and crashes in energy levels.</p>
+        <ul>
+          <li>Eat complex carbs before and after workouts for energy and recovery</li>
+          <li>Reduce carbs in the evening when you're less active</li>
+          <li>Vegetables are virtually unlimited — they're high in fibre and micronutrients</li>
+        </ul>
+    `,
+    part2: `
+        <h2>Fats: Essential, Not the Enemy</h2>
+        <p>For decades, dietary fat was blamed for making people fat. The science has since been corrected. <strong>Healthy fats are essential</strong> for hormone production, brain function, joint health, and absorbing fat-soluble vitamins (A, D, E, K).</p>
+        <ul>
+          <li><strong>Healthy fats:</strong> avocado, olive oil, nuts, seeds, oily fish (salmon, mackerel)</li>
+          <li><strong>Avoid:</strong> trans fats found in highly processed foods and margarine</li>
+          <li>Fat should make up 25–35% of your total daily calories</li>
+        </ul>
+
+        <div class="callout"><strong>⚡ Practical Macro Split for Beginners</strong>A good starting point: 30% protein · 40% carbohydrates · 30% fat. Adjust based on your goals — more protein and fewer carbs if cutting fat, more carbs if building muscle or highly active.</div>
+
+        <h2>How Many Calories Do You Actually Need?</h2>
+        <p>Before tracking macros, you need to know your <strong>Total Daily Energy Expenditure (TDEE)</strong> — the total calories you burn in a day. A rough estimate:</p>
+        <ul>
+          <li><strong>Weight loss:</strong> Eat 300–500 kcal below your TDEE</li>
+          <li><strong>Maintenance:</strong> Eat at your TDEE</li>
+          <li><strong>Muscle gain:</strong> Eat 200–300 kcal above your TDEE</li>
+        </ul>
+        <p>A 75kg moderately active person burns roughly 2,300–2,600 kcal per day. Use an online TDEE calculator for a more precise figure.</p>
+
+        <h2>Practical Tips to Hit Your Macros Daily</h2>
+        <ol>
+          <li><strong>Meal prep on Sundays.</strong> Cook bulk protein (chicken, eggs, lentils) and portion into containers. This removes daily decision fatigue.</li>
+          <li><strong>Build meals around protein first,</strong> then add carbs and fats around it.</li>
+          <li><strong>Use a free app like MyFitnessPal</strong> for 2–4 weeks to understand the macros in your regular foods. You don't need to track forever — it's an education tool.</li>
+          <li><strong>Don't obsess over perfection.</strong> Being within 10–15% of your macro targets consistently beats perfect tracking that you abandon after a week.</li>
+          <li><strong>Stay hydrated.</strong> Hunger and thirst signals overlap in the brain — drink 500ml of water before assuming you're hungry.</li>
+        </ol>
+
+        <h2>The Bottom Line</h2>
+        <p>You don't need a complicated diet plan. You need to eat enough protein, choose quality carbs and fats, and stay roughly within your calorie target. That's 90% of nutrition science simplified into a daily practice. Start there — everything else is refinement.</p>
+      </div>
+    `
+  },
+
+  sleep: {
+    tag: 'Recovery', emoji: '😴',
+    title: 'Why Sleep Is the Most Underrated Performance Tool',
+    part1: `
+      <div class="article-header">
+        <span class="article-tag">Recovery</span>
+        <h1 class="article-title">Why Sleep Is the Most Underrated Performance Tool</h1>
+        <div class="article-meta"><span>📅 May 22, 2026</span><span>⏱ 7 min read</span><span>✍️ FitLife Team</span></div>
+        <div class="article-hero-img">😴</div>
+      </div>
+      <div class="article-body">
+        <p>If you could take a pill that improved your athletic performance, accelerated fat loss, boosted your immune system, sharpened your focus, and extended your life — you'd take it. That pill already exists. It's called sleep, and most people are chronically under-dosing.</p>
+        <p>Despite everything we know about the importance of sleep, modern culture still treats it as optional. "I'll sleep when I'm dead," goes the saying — which, ironically, is exactly what chronic sleep deprivation is doing to you.</p>
+
+        <div class="callout"><strong>🧠 While You Sleep, Your Body Does This</strong>Repairs muscle tissue from exercise. Consolidates memories and skills. Regulates appetite hormones (ghrelin & leptin). Clears metabolic waste from the brain via the glymphatic system. Releases the majority of your daily growth hormone.</div>
+
+        <div class="stat-row">
+          <div class="stat-box"><div class="stat-num">7–9</div><div class="stat-lbl">hours recommended for adults</div></div>
+          <div class="stat-box"><div class="stat-num">62%</div><div class="stat-lbl">of adults don't meet this target</div></div>
+          <div class="stat-box"><div class="stat-num">3x</div><div class="stat-lbl">injury risk with under 6 hrs sleep</div></div>
+        </div>
+
+        <h2>What Happens When You're Sleep Deprived?</h2>
+        <p>Even one night of poor sleep has measurable consequences. After just 24 hours without adequate rest, cognitive performance drops to the equivalent of being legally drunk. And most people are running on chronic partial sleep deprivation without even realising it.</p>
+        <ul>
+          <li><strong>Fat loss stalls:</strong> Sleep deprivation elevates cortisol (the stress hormone), which promotes fat storage — particularly around the abdomen</li>
+          <li><strong>Muscle recovery suffers:</strong> Growth hormone is primarily released during deep sleep. Less sleep = less repair = less muscle growth</li>
+          <li><strong>Appetite increases:</strong> Ghrelin (hunger hormone) rises; leptin (fullness hormone) falls. You'll eat an average of 300–500 extra calories per day when under-slept</li>
+          <li><strong>Mental performance drops:</strong> Reaction time, decision-making, and emotional regulation all deteriorate significantly</li>
+        </ul>
+    `,
+    part2: `
+        <h2>The 4 Stages of Sleep — Why All of Them Matter</h2>
+        <p>Sleep isn't a uniform state. It cycles through four distinct stages multiple times per night, each serving a different biological function:</p>
+        <ul>
+          <li><strong>Stage 1 (Light sleep):</strong> The transition between wakefulness and sleep. Lasts just a few minutes.</li>
+          <li><strong>Stage 2 (Light sleep):</strong> Heart rate slows, body temperature drops. This is where memory consolidation begins.</li>
+          <li><strong>Stage 3 (Deep sleep / Slow-wave sleep):</strong> The most physically restorative stage. Growth hormone is released, tissue is repaired, and the immune system is strengthened. Hard to wake from.</li>
+          <li><strong>REM Sleep:</strong> Rapid Eye Movement sleep. The brain is highly active, dreams occur, and emotional memories are processed. Critical for mental health and learning.</li>
+        </ul>
+        <p>Disrupting sleep — even without fully waking — can rob you of the deep and REM stages that matter most for recovery.</p>
+
+        <h2>10 Science-Backed Tips for Better Sleep Tonight</h2>
+        <ol>
+          <li><strong>Keep a consistent sleep schedule</strong> — same bedtime and wake time every day, including weekends. This synchronises your circadian rhythm.</li>
+          <li><strong>Make your bedroom cold</strong> — the optimal sleep temperature is 16–19°C (60–67°F). Your body must lower its core temperature to initiate sleep.</li>
+          <li><strong>Eliminate light completely</strong> — blackout curtains or a sleep mask. Even small amounts of light disrupt melatonin production.</li>
+          <li><strong>Avoid screens 60–90 minutes before bed</strong> — blue light delays your body clock by up to 3 hours.</li>
+          <li><strong>Cut caffeine after 2pm</strong> — caffeine has a 5–6 hour half-life. An afternoon coffee is still 50% active in your system at 8pm.</li>
+          <li><strong>Avoid alcohol before bed</strong> — alcohol sedates you but fragments your sleep architecture and suppresses REM sleep.</li>
+          <li><strong>Try a warm shower 1–2 hours before bed</strong> — the subsequent drop in body temperature signals to your brain it's time to sleep.</li>
+          <li><strong>Write a tomorrow list</strong> — brain dump tomorrow's tasks onto paper before bed. This reduces the anxious mental rehearsal that keeps people awake.</li>
+          <li><strong>Limit fluids after 8pm</strong> — avoid disruptive middle-of-the-night trips to the bathroom.</li>
+          <li><strong>Expose yourself to morning sunlight</strong> — natural light in the first 30 minutes of waking sets your circadian clock and improves sleep 16 hours later.</li>
+        </ol>
+
+        <div class="callout"><strong>🏆 The Athlete's Advantage</strong>Research on Stanford University basketball players showed that extending sleep to 10 hours per night for 5–7 weeks improved shooting accuracy by 9%, sprint times, and reaction time — without any changes to training. Sleep is performance-enhancing.</div>
+      </div>
+    `
+  },
+
+  stretching: {
+    tag: 'Mobility', emoji: '🧘',
+    title: '10-Minute Morning Stretching Routine That Changes Your Day',
+    part1: `
+      <div class="article-header">
+        <span class="article-tag">Mobility</span>
+        <h1 class="article-title">10-Minute Morning Stretching Routine That Changes Your Day</h1>
+        <div class="article-meta"><span>📅 May 15, 2026</span><span>⏱ 6 min read</span><span>✍️ FitLife Team</span></div>
+        <div class="article-hero-img">🧘</div>
+      </div>
+      <div class="article-body">
+        <p>Most people wake up, stare at their phone, and wonder why they feel stiff and sluggish by 10am. The body has been still for 7–9 hours — joints are compressed, circulation is sluggish, and muscles are tight. A 10-minute morning stretch routine reverses all of that before your day even begins.</p>
+        <p>This isn't about becoming a yogi or achieving Instagram-worthy flexibility. It's about priming your body and mind for a productive day with five simple movements that anyone can do — in pyjamas, in your bedroom, with no equipment.</p>
+
+        <div class="callout"><strong>⏰ How to Use This Routine</strong>Do each stretch for 45–60 seconds. Move slowly and breathe deeply into each stretch. Never force range of motion — you should feel mild tension, never sharp pain. The full routine takes under 10 minutes.</div>
+
+        <h2>Stretch 1: Cat-Cow (Spinal Mobilisation)</h2>
+        <div class="exercise-block">
+          <span class="exercise-tag">45 SECONDS</span>
+          <h4>Cat-Cow Spinal Flow</h4>
+          <p>Start on all fours, hands below shoulders, knees below hips. Inhale: drop your belly, lift your tailbone and gaze (Cow). Exhale: round your spine toward the ceiling, tuck your tailbone and chin (Cat). Move slowly with your breath. This mobilises every vertebra in your spine and is one of the best antidotes to morning back stiffness.</p>
+        </div>
+
+        <h2>Stretch 2: Hip Flexor Lunge Stretch</h2>
+        <div class="exercise-block">
+          <span class="exercise-tag">30 SECONDS EACH SIDE</span>
+          <h4>Low Lunge Hip Flexor</h4>
+          <p>Step one foot forward into a lunge, lower the back knee to the floor. Gently shift your hips forward and down while keeping your torso upright. You should feel a deep stretch through the front of the back hip. After hours in a chair or bed, your hip flexors are shortened — this stretch resets them and improves posture immediately.</p>
+        </div>
+
+        <h2>Stretch 3: Seated Forward Fold</h2>
+        <div class="exercise-block">
+          <span class="exercise-tag">60 SECONDS</span>
+          <h4>Hamstring & Lower Back Stretch</h4>
+          <p>Sit on the floor with legs straight out in front of you. Hinge at the hips (not the waist) and reach toward your feet. Hold whatever you can reach — ankles, shins, or toes. Relax your head and neck. Don't bounce. This lengthens the entire posterior chain from your lower back to your calves.</p>
+        </div>
+    `,
+    part2: `
+        <h2>Stretch 4: Thread the Needle (Thoracic Rotation)</h2>
+        <div class="exercise-block">
+          <span class="exercise-tag">30 SECONDS EACH SIDE</span>
+          <h4>Thoracic Spine Rotation</h4>
+          <p>Start on all fours. Take one hand and slide it under your body along the floor, rotating your thoracic spine as your shoulder drops toward the ground. Follow your moving hand with your gaze. This mobilises the thoracic spine (mid-back) — the area most restricted in people who sit at desks. Improved rotation here reduces neck and shoulder tension dramatically.</p>
+        </div>
+
+        <h2>Stretch 5: Lying Glute Stretch (Figure-4)</h2>
+        <div class="exercise-block">
+          <span class="exercise-tag">30 SECONDS EACH SIDE</span>
+          <h4>Piriformis & Glute Stretch</h4>
+          <p>Lie on your back with knees bent. Cross one ankle over the opposite knee (making a figure-4 shape). Flex your top foot, then either stay here or reach through and pull the bottom thigh toward your chest. You should feel a deep stretch in the outer hip and glute. Tight glutes cause lower back pain, knee issues, and poor posture — this stretch addresses all three.</p>
+        </div>
+
+        <h2>The Complete 10-Minute Routine</h2>
+        <ul>
+          <li>Cat-Cow: 60 seconds</li>
+          <li>Hip Flexor Lunge: 30 sec left + 30 sec right</li>
+          <li>Child's Pose: 60 seconds (bonus — arms stretched overhead, hips pushed back)</li>
+          <li>Seated Forward Fold: 60 seconds</li>
+          <li>Thread the Needle: 30 sec left + 30 sec right</li>
+          <li>Figure-4 Glute Stretch: 30 sec left + 30 sec right</li>
+          <li>Standing side bend: 30 sec left + 30 sec right (bonus — reach one arm overhead and lean)</li>
+        </ul>
+
+        <div class="callout"><strong>🌅 The Compounding Effect</strong>One morning stretch session feels good. Thirty days of them transforms your mobility, posture, and energy levels. The key is making it non-negotiable — do it before checking your phone or making coffee. Attach it to the moment you get out of bed.</div>
+
+        <h2>Why Morning Is the Best Time</h2>
+        <p>Cortisol (your wake-up hormone) peaks in the first 30–60 minutes after waking. Physical movement during this window harnesses that natural energy boost and signals to your brain that the day has begun intentionally. People who stretch in the morning consistently report better focus, lower anxiety, and more energy throughout the day compared to those who skip it.</p>
+      </div>
+    `
+  },
+
+  walkvsrun: {
+    tag: 'Cardio', emoji: '🏃',
+    title: 'Walk vs Run: Which Is Better for Weight Loss?',
+    part1: `
+      <div class="article-header">
+        <span class="article-tag">Cardio</span>
+        <h1 class="article-title">Walk vs Run: Which Is Better for Weight Loss?</h1>
+        <div class="article-meta"><span>📅 May 8, 2026</span><span>⏱ 6 min read</span><span>✍️ FitLife Team</span></div>
+        <div class="article-hero-img">🏃</div>
+      </div>
+      <div class="article-body">
+        <p>This is one of the most common fitness debates, and the answer is more nuanced than either camp admits. Running burns more calories per minute — but that doesn't automatically make it the better choice for weight loss. Context matters enormously.</p>
+
+        <div class="stat-row">
+          <div class="stat-box"><div class="stat-num">280</div><div class="stat-lbl">kcal burned walking 60 min (75kg person)</div></div>
+          <div class="stat-box"><div class="stat-num">560</div><div class="stat-lbl">kcal burned running 60 min (75kg person)</div></div>
+          <div class="stat-box"><div class="stat-num">2x</div><div class="stat-lbl">injury risk of running vs walking</div></div>
+        </div>
+
+        <h2>The Case for Running</h2>
+        <p>Running is simply more metabolically demanding. A 75kg person burns approximately 560–650 calories running for an hour at a moderate pace (9 km/h), compared to roughly 240–300 calories walking at a brisk pace. Over weeks and months, that adds up to significant energy expenditure.</p>
+        <p>Running also produces a stronger cardiovascular adaptation — it strengthens the heart more rapidly, improves VO2 max (the gold standard measure of aerobic fitness), and has been linked to longer life expectancy in large population studies.</p>
+        <ul>
+          <li>Burns roughly 2x more calories than walking for the same duration</li>
+          <li>Produces a larger post-exercise oxygen consumption effect (EPOC) — your metabolism stays elevated after running</li>
+          <li>Improves bone density (high-impact loading stimulates bone remodelling)</li>
+          <li>Significant mental health benefits — "runner's high" is a real neurochemical effect from endorphins and endocannabinoids</li>
+        </ul>
+
+        <h2>The Case for Walking</h2>
+        <p>Here's what the running advocates miss: <strong>the best exercise is the one you'll actually do consistently.</strong> Walking has an almost zero injury rate compared to running. It's sustainable for people of all fitness levels, all ages, and most health conditions. And it burns significant calories if you do enough of it.</p>
+        <p>Consider this: walking 10,000 steps per day (~7–8km) burns 400–500 calories. Do that every day and you've created a meaningful weekly deficit without a single minute of hard exercise.</p>
+    `,
+    part2: `
+        <ul>
+          <li>Near-zero injury risk — suitable for beginners, older adults, those with joint issues</li>
+          <li>Easier to sustain as a daily habit for years, not just weeks</li>
+          <li>Significantly reduces cortisol (stress hormone) — walking in nature especially</li>
+          <li>Can be done during phone calls, lunch breaks, and commutes — no gym required</li>
+          <li>Research shows 30 minutes of brisk walking 5x per week reduces cardiovascular disease risk by 35%</li>
+        </ul>
+
+        <div class="callout"><strong>💡 The Surprising Finding</strong>A 2013 study in the American Heart Association journal Arteriosclerosis, Thrombosis, and Vascular Biology found that walking reduced the risk of high blood pressure, high cholesterol, and diabetes by similar amounts to running — when the same energy expenditure was compared. The key phrase: same energy expenditure. You just need to walk more.</div>
+
+        <h2>The Real Winner: Combination + Consistency</h2>
+        <p>The most effective strategy isn't picking a side — it's using both strategically:</p>
+        <ul>
+          <li><strong>Walk daily</strong> as your non-negotiable foundation. Aim for 7,000–10,000 steps. This builds your base activity level, manages stress, and burns steady calories without recovery demands.</li>
+          <li><strong>Run 2–3 times per week</strong> if you're capable and enjoy it. Use it for cardiovascular adaptation and calorie acceleration.</li>
+          <li><strong>Add incline walking</strong> on a treadmill (10–15% grade, 5–6 km/h) — this burns almost as many calories as running with a fraction of the joint impact. A genuinely underrated tool.</li>
+        </ul>
+
+        <h2>Which Should YOU Choose?</h2>
+        <p>If you're a complete beginner, overweight, over 50, or have knee or hip issues: <strong>start with walking.</strong> Build the habit first, then introduce jogging intervals once your base fitness improves.</p>
+        <p>If you're already active and want to accelerate fat loss and cardiovascular fitness: <strong>add 2–3 runs per week</strong> on top of your daily walking habit.</p>
+        <p>The worst thing you can do is start an aggressive running programme, get injured in week 3, and stop all activity for a month. Slow, consistent progress beats intense, interrupted progress every single time.</p>
+
+        <div class="callout"><strong>🏆 The Bottom Line</strong>Walk every day. Run when you can. Move your body in ways that feel sustainable for the long haul. Weight loss is a marathon, not a sprint — and ironically, the people who walk most consistently often outperform those who run in short bursts and then rest.</div>
+      </div>
+    `
+  }
+
+};
+
+// ── NAVIGATION ────────────────────────────────────────────
+function showHome() {
+  document.getElementById('home-page').classList.add('active');
+  document.getElementById('article-page').classList.remove('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function openArticle(id) {
+  const a = articles[id];
+  if (!a) return;
+  document.getElementById('article-content').innerHTML = a.part1;
+  document.getElementById('article-content-2').innerHTML = a.part2;
+  document.getElementById('home-page').classList.remove('active');
+  document.getElementById('article-page').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function scrollTo(id) {
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 50);
+}
+
+// ── BMI CALCULATOR ─────────────────────────────────────────
+function calcBMI() {
+  const w = parseFloat(document.getElementById('weight').value);
+  const h = parseFloat(document.getElementById('height').value) / 100;
+  if (!w || !h || h <= 0) { alert('Please enter valid weight and height.'); return; }
+  const bmi = (w / (h * h)).toFixed(1);
+  let cat = '', color = '', advice = '';
+  if (bmi < 18.5) {
+    cat = 'Underweight'; color = '#e9c46a';
+    advice = 'Your BMI suggests you may be underweight. Focus on nutrient-dense foods, adequate protein (at least 1.6g/kg), and consider speaking with a healthcare professional or dietitian to build a healthy weight gain plan.';
+  } else if (bmi < 25) {
+    cat = 'Normal weight — great job! 🎉'; color = '#2d6a4f';
+    advice = 'Your BMI falls within the healthy range. Focus on maintaining this through balanced nutrition and regular exercise. Remember: BMI is one indicator — muscle mass, waist circumference, and lifestyle are equally important measures of health.';
+  } else if (bmi < 30) {
+    cat = 'Overweight'; color = '#e9a82a';
+    advice = 'Your BMI is in the overweight range. Small, sustainable changes make the biggest difference: a moderate calorie deficit of 300–500 kcal/day, 7,000+ steps daily, and strength training 2–3x per week can shift this significantly over 3–6 months.';
+  } else {
+    cat = 'Obese'; color = '#e76f51';
+    advice = 'Your BMI falls in the obese range. Please speak with your GP or a healthcare professional for personalised guidance. Weight loss of even 5–10% of body weight dramatically reduces the risk of type 2 diabetes, heart disease, and joint problems.';
+  }
+  const result = document.getElementById('bmi-result');
+  document.getElementById('bmi-value').textContent = bmi;
+  document.getElementById('bmi-value').style.color = color;
+  document.getElementById('bmi-cat').textContent = cat;
+  document.getElementById('bmi-advice').textContent = advice;
+  result.classList.add('show');
+}
+</script>
+</body>
+</html>
